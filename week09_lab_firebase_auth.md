@@ -163,8 +163,28 @@ Future<void> main() async {
 
 > ✅ **Checkpoint 2.1** ทดสอบสมัครสมาชิกด้วย Email ใหม่สำเร็จ ถ่ายภาพหน้าจอ Firebase Console เมนู Authentication → Users ที่แสดงบัญชีที่เพิ่งสมัคร จากนั้นทดสอบกรณีผิดพลาด 2 กรณี คือ (ก) สมัครซ้ำด้วย Email เดิม และ (ข) ใส่รหัสผ่านสั้นเกินไป ถ่ายภาพหน้าจอข้อความ Error ทั้งสองกรณี พร้อมอธิบายว่าโค้ดส่วนใดใน `auth_service.dart` เป็นตัวจัดการแต่ละกรณี
 
-```text
-บันทึกรูปผลลัพธ์ที่นี่ และคำอธิบายของแต่ละกรณี
+
+
+<img width="376" height="722" alt="image" src="https://github.com/user-attachments/assets/67004a08-923f-4b21-a13e-7ec06bed2e6e" />
+
+
+<img width="377" height="717" alt="image" src="https://github.com/user-attachments/assets/ab46dee9-5897-48e7-8fbc-8595fa611f29" />
+
+
+<img width="395" height="722" alt="image" src="https://github.com/user-attachments/assets/9d825629-027a-4a9f-865e-4a13d7037d3c" />
+
+
+```อธิบายโค้ด
+
+กรณีสมัครซ้ำด้วย Email เดิม
+- โค้ดส่วนที่จัดการใช้เงื่อนไข if (e.code == 'email-already-in-use')
+- เมื่อ Firebase ส่งรหัสข้อผิดพลาดกลับมาว่า 'email-already-in-use' หมายถึงอีเมลนี้ถูกลงทะเบียนในระบบไปแล้ว 
+
+กรณีใส่รหัสผ่านสั้นเกินไป
+- โค้ดส่วนที่จัดการใช้เงื่อนไข else if (e.code == 'weak-password')
+- เมื่อ Firebase ส่งรหัสข้อผิดพลาดกลับมาว่า 'weak-password' เนื่องจากรหัสผ่านมีความปลอดภัยต่ำหรือน้อยกว่า 6 ตัวอักษร โค้ดส่วนนี้จะทำการแปลงข้อความ
+'รหัสผ่านง่ายเกินไป กรุณาใช้อย่างน้อย 6 ตัวอักษรขึ้นไป'
+
 ```
 
 ---
